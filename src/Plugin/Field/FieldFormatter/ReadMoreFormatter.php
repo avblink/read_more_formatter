@@ -82,7 +82,7 @@ class ReadMoreFormatter extends FormatterBase {
         );
 
         $element['use_text_summary_delimiter'] = array(
-          '#title' => t("Use text summary delimiter @delimiter", array('@delimiter'=> '<!--break-->')),
+          '#title' => t("Use text summary delimiter @delimiter", array('@delimiter' => '<!--break-->')),
           '#description' => t('If checked then all the text above the delimiter will be treated as summary. <br/> Otherwise text from "summary" field will be used.'),
           '#type' => 'checkbox',
           '#default_value' => $this->getSetting('use_text_summary_delimiter'),
@@ -101,6 +101,7 @@ class ReadMoreFormatter extends FormatterBase {
         $summary[] = t('Collapse button name: @name', array('@name' => $this->getSetting('collapse_name')));
         $summary[] = t('Expand button class: @name', array('@name' => $this->getSetting('expand_class')));
         $summary[] = t('Collapse button class: @name', array('@name' => $this->getSetting('collapse_class')));
+        $summary[] = t('Using delimiter: @setting', array('@setting' => $this->getSetting('use_text_summary_delimiter') ? 'Yes' : 'No'));
 
 
         return $summary;
