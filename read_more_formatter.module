@@ -1,0 +1,26 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
+
+/**
+ * @file
+ * Nothing to see here. It's all about the Field/FieldFormatter.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function read_more_formatter_theme() {
+    return array(
+      'read_more_formatter' => array(
+        'variables' => array(
+          'full_text' => NULL,
+          'summary' => NULL,
+          'expand_link' => NULL,
+          'collapse_link' => NULL,
+        ),
+        'template' => 'read-more-formatter',
+      ),
+    );
+}

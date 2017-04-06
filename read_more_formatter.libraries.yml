@@ -1,0 +1,8 @@
+read_more_formatter.default:
+  js:
+    js/read_more_formatter.js: {}   
+  css:
+    theme:
+      css/read_more_formatter.css: {}
+  dependencies:
+    - core/jquery

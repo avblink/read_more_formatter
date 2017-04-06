@@ -1,0 +1,12 @@
+.read-more-formatter.collapsed .expanded-text {
+    display: none;
+}
+.read-more-formatter.collapsed .links .collapse-link {
+    display: none;
+}
+.read-more-formatter.expanded .collapsed-text {
+    display: none;
+}
+.read-more-formatter.expanded .links .expand-link {
+    display: none;
+}

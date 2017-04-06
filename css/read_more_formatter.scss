@@ -1,0 +1,26 @@
+.read-more-formatter {
+
+    &.collapsed{
+        .expanded-text {
+            display:none; 
+        }
+
+        .links {
+            .collapse-link {
+                display:none;
+            }
+        }
+    }
+
+    &.expanded{
+        .collapsed-text {
+            display:none; 
+        }
+
+        .links {
+            .expand-link {
+                display:none;
+            }
+        }
+    }
+}

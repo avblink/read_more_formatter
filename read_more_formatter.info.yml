@@ -1,0 +1,4 @@
+name: 'Read More Formatter'
+description: "Adds 'Read More' button to the summary text"
+type: module
+core: 8.x
