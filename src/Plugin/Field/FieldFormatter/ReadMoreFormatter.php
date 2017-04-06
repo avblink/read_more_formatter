@@ -25,8 +25,7 @@ use Drupal\Core\Link;
  *     "expand_name" = "Read more",
  *     "collapse_name" = "Read less",
  *     "expand_class" = "",
- *     "collapse_class" = "",
- *     "use_text_summary_delimiter" = FALSE
+ *     "collapse_class" = ""
  *   }
  * )
  */
@@ -41,7 +40,6 @@ class ReadMoreFormatter extends FormatterBase {
           'collapse_name' => t('Read less'),
           'expand_class' => '',
           'collapse_class' => '',
-          'use_text_summary_delimiter' => FALSE,
             ) + parent::defaultSettings();
     }
 
@@ -50,6 +48,11 @@ class ReadMoreFormatter extends FormatterBase {
      */
     public function settingsForm(array $form, FormStateInterface $form_state) {
         $element = parent::settingsForm($form, $form_state);
+
+        $element['help'] = array(
+          '#markup' => t("<br/>Text from 'Summary' field will be used as summary unless there is a @delimiter delimiter added in the main field.<br/>"
+              . "In which case text above the delimiter will be used as summary.", array('@delimiter' => '<!--break-->')),
+        );
 
         $element['expand_name'] = array(
           '#title' => t('Expand button name'),
@@ -81,13 +84,6 @@ class ReadMoreFormatter extends FormatterBase {
           '#default_value' => $this->getSetting('collapse_class'),
         );
 
-        $element['use_text_summary_delimiter'] = array(
-          '#title' => t("Use text summary delimiter @delimiter", array('@delimiter' => '<!--break-->')),
-          '#description' => t('If checked then all the text above the delimiter will be treated as summary. <br/> Otherwise text from "summary" field will be used.'),
-          '#type' => 'checkbox',
-          '#default_value' => $this->getSetting('use_text_summary_delimiter'),
-        );
-
         return $element;
     }
 
@@ -101,8 +97,6 @@ class ReadMoreFormatter extends FormatterBase {
         $summary[] = t('Collapse button name: @name', array('@name' => $this->getSetting('collapse_name')));
         $summary[] = t('Expand button class: @name', array('@name' => $this->getSetting('expand_class')));
         $summary[] = t('Collapse button class: @name', array('@name' => $this->getSetting('collapse_class')));
-        $summary[] = t('Using delimiter: @setting', array('@setting' => $this->getSetting('use_text_summary_delimiter') ? 'Yes' : 'No'));
-
 
         return $summary;
     }
@@ -141,14 +135,22 @@ class ReadMoreFormatter extends FormatterBase {
         $elements = array();
 
         foreach ($items as $delta => $item) {
+
+            $delimiter = strpos($item->value, '<!--break-->');
+            $summary = $item->summary;
+
             $elements[$delta] = array(
               '#theme' => 'read_more_formatter',
               '#full_text' => $item->value,
-              '#summary' => $this->getSetting('use_text_summary_delimiter') ? text_summary($item->value) : $item->summary,
-              '#expand_link' => $expand_link,
-              '#collapse_link' => $collapse_link,
+              '#summary' => $delimiter ? text_summary($item->value) : $summary,
             );
+
+            if ($delimiter || $summary) {
+                $elements[$delta]['#expand_link'] = $expand_link;
+                $elements[$delta]['#collapse_link'] = $collapse_link;
+            }
         }
+
         $elements['#attached']['library'][] = 'read_more_formatter/read_more_formatter.default';
 
         return $elements;
