@@ -1,10 +1,13 @@
 {
     "name": "avblink/read_more_formatter",
     "description": "Drupal 8 text_with_summary field formatter. Adds 'Read more' button to expand/collapse full content.",
-    "type": "module",
+    "type": "drupal-module",
     "authors": [
         {
             "name": "Alexander Benjamin"
         }
-    ]
+    ],
+    "require": {
+        "composer/installers": "~1.0"
+    }
 }
