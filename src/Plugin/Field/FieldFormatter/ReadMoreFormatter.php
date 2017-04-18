@@ -11,6 +11,8 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Url;
+use Exception;
 
 /**
  * Plugin implementation of the 'read_more_formatter' formatter.
@@ -108,7 +110,13 @@ class ReadMoreFormatter extends FormatterBase {
 
         $entity = $items->getEntity();
 
-        $uri = $entity->toUrl();
+        try {
+            $uri = $entity->toUrl();
+        }
+        catch (Exception $ex) {
+            $uri = new Url('<none>');
+        }
+        
         $expand_link_name = $this->getSetting('expand_name');
         $collapse_link_name = $this->getSetting('collapse_name');
 
